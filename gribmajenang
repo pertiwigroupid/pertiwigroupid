@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Status Karyawan</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
+      color: #333;
+    }
+    .container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #4A90E2;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 2px solid #4A90E2;
+      border-radius: 10px;
+      font-size: 1rem;
+    }
+    button {
+      background-color: #4A90E2;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #357ABD;
+    }
+    #status {
+      margin-top: 20px;
+      font-size: 1.5rem;
+      padding: 15px;
+      border-radius: 10px;
+      display: none;
+      color: white;
+      font-weight: bold;
+    }
+    .aktif {
+      background-color: #28a745;
+    }
+    .tidak-aktif {
+      background-color: #dc3545;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Periksa Status Karyawan</h1>
+    <input type="text" id="idKaryawan" placeholder="Masukkan ID atau Scan Barcode" autocomplete="off">
+    <button onclick="cekStatus()">Periksa</button>
+    
+    <div id="statusContainer">
+      <p id="status"></p>
+    </div>
+  </div>
+
+  <script>
+    function cekStatus() {
+      var idKaryawan = document.getElementById('idKaryawan').value.trim();
+
+      // Data karyawan sementara
+      var dataKaryawan = {
+        "101": { "nama": "Andi", "status": "Aktif" },
+        "102": { "nama": "Budi", "status": "Tidak Aktif" }
+      };
+
+      var statusElement = document.getElementById('status');
+      var statusContainer = document.getElementById('statusContainer');
+
+      // Cari karyawan berdasarkan ID
+      var karyawan = dataKaryawan[idKaryawan];
+
+      // Bersihkan input
+      document.getElementById('idKaryawan').value = '';
+
+      if (karyawan) {
+        statusElement.textContent = `Nama: ${karyawan.nama} | Status: ${karyawan.status}`;
+        statusElement.className = karyawan.status === "Aktif" ? "aktif" : "tidak-aktif";
+      } else {
+        statusElement.textContent = "Karyawan tidak ditemukan";
+        statusElement.className = "tidak-aktif";
+      }
+
+      // Tampilkan status dengan animasi
+      statusElement.style.display = 'block';
+      statusElement.style.opacity = 0;
+      setTimeout(() => {
+        statusElement.style.opacity = 1;
+      }, 100);
+    }
+  </script>
+</body>
+</html>
